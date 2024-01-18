@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseUrl } from './constants';
 
 const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/api' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${baseUrl}` }),
   endpoints: (builder) => ({
     getAllData: builder.query({
       query: () => 'data',
@@ -26,14 +27,3 @@ const store = configureStore({
 });
 
 export default store;
-
-// import { configureStore } from '@reduxjs/toolkit';
-// import { apiReducer } from './features/api/apiSlice';
-
-// const store = configureStore({
-//   reducer: {
-//     api: apiReducer,
-//   },
-// });
-
-// export default store;
