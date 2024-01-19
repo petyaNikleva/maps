@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useGetAllDataQuery } from "../store";
 
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+
 function MainMap() {
   const [localData, setLocalData] = useState([]);
   const {
@@ -29,6 +31,14 @@ function MainMap() {
           ))}
         </ul>
       ) : null}
+      <div>
+        <MapContainer center={[42.697708, 23.321867]} zoom={12}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+        </MapContainer>
+      </div>
     </div>
   );
 }
