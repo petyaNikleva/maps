@@ -1,13 +1,13 @@
 import "./App.css";
 import Header from "./components/Header";
-import MainMap from "./components/MainMap";
+import Home from "./pages/Home";
 
 function App() {
 
   return (
     <div>
       <Header />
-        <MainMap />
+        <Home />
     </div>
   );
 }
