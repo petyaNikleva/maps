@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer } from "react-leaflet";
-import LineMap from "./LineMap";
+import LineMap from './LineMap'
 
-const Map = ({ lines }) => {
+const Map = ({ lines, routeId }) => {
   return (
     <div>
       <MapContainer center={[42.697708, 23.321867]} zoom={14}>
@@ -10,9 +10,8 @@ const Map = ({ lines }) => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
         {lines.map((lineInfo) => (
-          <LineMap key={lineInfo.line} lineInfo={lineInfo} />
+          <LineMap key={lineInfo.line} lineInfo={lineInfo} routeId={routeId} />
         ))}
-        {/* <LineMap key={lines[0].line} lineInfo={lines[0]} /> */}
       </MapContainer>
     </div>
   );

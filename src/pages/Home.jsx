@@ -7,6 +7,8 @@ import Map from "../components/Map";
 
 function Home() {
   const [lines, setLines] = useState([]);
+  const [typeVehicle, setTypeVehicle] = useState("");
+
   const {
     data: allData,
     isLoading: allDataLoading,
@@ -19,9 +21,7 @@ function Home() {
     }
   }, [allData]);
 
-  const [typeVehicle, setTypeVehicle] = useState("");
-
-  const handleChange = (e) => {
+    const handleChange = (e) => {
     setTypeVehicle(e.target.value);
     let selectedType = e.target.value;
     selectedType === "All"
@@ -46,7 +46,6 @@ function Home() {
       </FormControl>
       {lines && <LineList lines={lines} />}
       {lines && <Map lines={lines} />}
-
       {allDataLoading && <p>Loading...</p>}
       {allDataError && <p>Error fetching data</p>}
     </Box>

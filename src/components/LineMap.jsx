@@ -1,27 +1,15 @@
 import { CircleMarker, Polyline, Popup } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
+import { findRouteById } from "../utils/utils";
 
-const LineMap = ({ lineInfo }) => {
+const LineMap = ({ lineInfo, routeId }) => {
   const navigate = useNavigate();
-  // console.log(lineInfo);
   const { line, routes } = lineInfo;
-  const firstRoute = routes[0];
-  const secondRoute = routes[1];
-  // console.log(secondRoute);
-  const {
-    transportType, // "A" autobus type
-    id: firstRouteId,
-    name: firstRouteName, // Ж.К. ЛЮЛИН 1,2 - Ж.К. МЛАДОСТ 1
-    segments: firstRouteSegmets,
-    stops: firstRouteStops,
-  } = firstRoute;
+  const [firstRoute, secondRoute] = routes;
 
-  const {
-    id: secondRouteId,
-    name: secondRouteName,
-    segments: secondRouteSegmets,
-    stops: secondRouteStops,
-  } = secondRoute;
+  const { segments: firstRouteSegments, stops: firstRouteStops } = firstRoute;
+  const { segments: secondRouteSegments, stops: secondRouteStops } =
+    secondRoute;
 
   const drawPolyline = (segments) => {
     return segments.flatMap((segment) =>
@@ -29,7 +17,7 @@ const LineMap = ({ lineInfo }) => {
     );
   };
 
-  const renderRouteStops = (stops, color) => (
+  const renderRouteStops = (stops, color) =>
     stops.map((stop) => (
       <CircleMarker
         key={stop.id}
@@ -39,13 +27,8 @@ const LineMap = ({ lineInfo }) => {
       >
         <Popup>{stop.name}</Popup>
       </CircleMarker>
-    ))
-  );
+    ));
 
-  const handlePolylineClick = (line) => {
-    navigate(`/details/${line}`);
-  };
-  
   const renderRoutePolyline = (segments, color, line) => (
     <Polyline
       pathOptions={{ color }}
@@ -56,14 +39,32 @@ const LineMap = ({ lineInfo }) => {
     />
   );
 
+  const handlePolylineClick = (line) => {
+    navigate(`/details/${line}`);
+  };
+
+  if (routeId) {
+    const route = findRouteById(lineInfo, routeId);
+    return (
+      <>
+        {lineInfo && (
+          <div>
+            {renderRouteStops(route.stops, "blue")}
+            {renderRoutePolyline(route.segments, "blue", line)}
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
       {lineInfo && (
         <div>
           {renderRouteStops(firstRouteStops, "blue")}
-          {renderRoutePolyline(firstRouteSegmets, "blue", line)}
+          {renderRoutePolyline(firstRouteSegments, "blue", line)}
           {renderRouteStops(secondRouteStops, "red")}
-          {renderRoutePolyline(secondRouteSegmets, "red", line)}
+          {renderRoutePolyline(secondRouteSegments, "red", line)}
         </div>
       )}
     </>

@@ -1,11 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -13,48 +8,26 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { findRouteById } from "../utils/utils";
 
-const LineTable = ({ currentLine }) => {
-  const { line, routes } = currentLine;
-  const firstRoute = routes[0];
-  const secondRoute = routes[1];
+const LineTable = ({ slectedLine, routeId }) => {
+  const [selectedRoute, setSelectedRoute] = useState('');
+  const { line } = slectedLine;
 
-  const {
-    name: firstRouteName,
-  } = firstRoute;
-
-  const {
-    name: secondRouteName,
-  } = secondRoute;
-
-  const [selectedRoute, setSelectedRoute] = useState(firstRoute);
-
-  const handleChange = (e) => {
-    const selectedRouteName = e.target.value;
-
-    if (selectedRouteName === firstRouteName) {
-      setSelectedRoute(firstRoute);
-    } else {
-      setSelectedRoute(secondRoute);
-    }
-  };
+  useEffect(() => {
+    const route = findRouteById(slectedLine, routeId || slectedLine.routes[0].id);
+    setSelectedRoute(route);
+  }, [slectedLine, routeId]);
 
   return (
     <>
-    <Box marginBottom={12}>
-      <FormControl style={{ maxWidth: 400}}>
-        <InputLabel>Маршрут</InputLabel>
-        <Select
-          value={selectedRoute.name}
-          label="typeVehicle"
-          onChange={handleChange}
-        >
-          <MenuItem value={firstRouteName}>{firstRouteName}</MenuItem>
-          <MenuItem value={secondRouteName}>{secondRouteName}</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>  
-      {selectedRoute.stops.length > 0 ? (
+        <div>ss</div>
+        <div>ss</div>
+        <div>ss</div>
+        <div>ss</div>
+        <div>ss</div>
+
+      {selectedRoute ? (
         <TableContainer
           component={Paper}
           style={{ maxWidth: 400, height: 300, overflowY: "auto" }}
