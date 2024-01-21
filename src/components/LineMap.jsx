@@ -1,6 +1,8 @@
-import { CircleMarker, Marker, Polyline, Popup } from "react-leaflet";
+import { CircleMarker, Polyline, Popup } from "react-leaflet";
+import { useNavigate } from "react-router-dom";
 
 const LineMap = ({ lineInfo }) => {
+  const navigate = useNavigate();
   // console.log(lineInfo);
   const { line, routes } = lineInfo;
   const firstRoute = routes[0];
@@ -39,11 +41,18 @@ const LineMap = ({ lineInfo }) => {
       </CircleMarker>
     ))
   );
+
+  const handlePolylineClick = (line) => {
+    navigate(`/details/${line}`);
+  };
   
-  const renderRoutePolyline = (segments, color) => (
+  const renderRoutePolyline = (segments, color, line) => (
     <Polyline
       pathOptions={{ color }}
       positions={drawPolyline(segments)}
+      eventHandlers={{
+        click: () => handlePolylineClick(line),
+      }}
     />
   );
 
@@ -52,9 +61,9 @@ const LineMap = ({ lineInfo }) => {
       {lineInfo && (
         <div>
           {renderRouteStops(firstRouteStops, "blue")}
-          {renderRoutePolyline(firstRouteSegmets, "blue")}
+          {renderRoutePolyline(firstRouteSegmets, "blue", line)}
           {renderRouteStops(secondRouteStops, "red")}
-          {renderRoutePolyline(secondRouteSegmets, "red")}
+          {renderRoutePolyline(secondRouteSegmets, "red", line)}
         </div>
       )}
     </>
