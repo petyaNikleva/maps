@@ -7,7 +7,7 @@ import Map from "../components/Map";
 
 function Home() {
   const [lines, setLines] = useState([]);
-  const [typeVehicle, setTypeVehicle] = useState("");
+  const [typeVehicle, setTypeVehicle] = useState("All");
 
   const {
     data: allData,
@@ -21,31 +21,27 @@ function Home() {
     }
   }, [allData]);
 
-    const handleChange = (e) => {
-    setTypeVehicle(e.target.value);
-    let selectedType = e.target.value;
-    selectedType === "All"
-      ? setLines(allData)
-      : setLines(
-          allData.filter((x) => {
-            return x.line.includes(selectedType);
-          })
-        );
+  const handleTypeVehicleChange = (e) => {
+    const selectedType = e.target.value;
+    setTypeVehicle(selectedType);
+    setLines(selectedType === "All" ? allData : allData.filter((x) => x.line.includes(selectedType)));
   };
 
   return (
     <Box>
-      <FormControl fullWidth>
+      <FormControl fullWidth sx={{marginBottom: 2}}>
         <InputLabel>Vehicle Type</InputLabel>
-        <Select value={typeVehicle} label="typeVehicle" onChange={handleChange}>
+        <Select value={typeVehicle} label="typeVehicle" onChange={handleTypeVehicleChange}>
           <MenuItem value={"All"}>All</MenuItem>
           <MenuItem value={"A"}>Bus</MenuItem>
           <MenuItem value={"TM"}>Tram</MenuItem>
           <MenuItem value={"TB"}>Trolleybus</MenuItem>
         </Select>
       </FormControl>
-      {lines && <LineList lines={lines} />}
-      {lines && <Map lines={lines} />}
+      <Box className="wrapper" style={{ display: "flex" }}>
+        {lines && <LineList lines={lines} />}
+        {lines && <Map lines={lines} />}
+      </Box>
       {allDataLoading && <p>Loading...</p>}
       {allDataError && <p>Error fetching data</p>}
     </Box>

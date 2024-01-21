@@ -9,7 +9,7 @@ import "./NavBar.css";
 const NavBar = () => {
 
   return (
-    <Box sx={{ flexGrow: 1, marginBottom: 4 }}>
+    <Box sx={{ flexGrow: 1, marginBottom: 2 }}>
       <AppBar position="sticky">
         <Toolbar>
           <Link className="navBar" to="/">Home</Link>

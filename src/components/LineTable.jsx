@@ -21,12 +21,6 @@ const LineTable = ({ slectedLine, routeId }) => {
 
   return (
     <>
-        <div>ss</div>
-        <div>ss</div>
-        <div>ss</div>
-        <div>ss</div>
-        <div>ss</div>
-
       {selectedRoute ? (
         <TableContainer
           component={Paper}
