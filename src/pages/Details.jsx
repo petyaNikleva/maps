@@ -5,10 +5,11 @@ import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useGetLineDataQuery } from "../store";
 import Map from "../components/Map";
 import LineTable from "../components/LineTable";
+import { DEFAULT_ID } from "../constants";
 
 const Details = () => {
   const [sеlectedLine, setSеlectedLine] = useState(null);
-  const [routeId, setRouteId] = useState("defaultId");
+  const [routeId, setRouteId] = useState(DEFAULT_ID);
   const { line } = useParams();
   const {
     data: lineData,
@@ -33,7 +34,7 @@ const Details = () => {
         <FormControl fullWidth sx={{marginBottom: 2}}>
           <InputLabel>Change</InputLabel>
           <Select value={routeId} label="route" onChange={handleChange}>
-          <MenuItem value={"defaultId"}>
+          <MenuItem value={DEFAULT_ID}>
               ВСИЧКИ СПИРКИ
             </MenuItem>
             <MenuItem value={sеlectedLine.routes[0].id}>

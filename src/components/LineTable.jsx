@@ -11,18 +11,19 @@ import {
   Typography,
 } from "@mui/material";
 import { combineRoutes, findRouteById } from "../utils/utils";
+import { DEFAULT_ID } from "../constants";
 
 const LineTable = ({ sеlectedLine, routeId }) => {
   const [selectedRoute, setSelectedRoute] = useState("");
-  const [twoColumnTable, setTwoColumnTable] = useState(false);
+  const [twoToutesTable, setTwoToutesTable] = useState(false);
 
   useEffect(() => {
-    if (routeId !== "defaultId") {
+    if (routeId !== DEFAULT_ID) {
       const route = findRouteById(sеlectedLine, routeId);
       setSelectedRoute(route);
-      setTwoColumnTable(false);
+      setTwoToutesTable(false);
     } else {
-      setTwoColumnTable(true);
+      setTwoToutesTable(true);
     }
   }, [sеlectedLine, routeId]);
 
@@ -46,7 +47,7 @@ const LineTable = ({ sеlectedLine, routeId }) => {
       alignItems="center"
       marginTop="5rem"
     >
-      {twoColumnTable ? (
+      {twoToutesTable ? (
         <TableContainer
           component={Paper}
           sx={{ ...commonTableContainerStyles }}
@@ -80,7 +81,7 @@ const LineTable = ({ sеlectedLine, routeId }) => {
           </Table>
         </TableContainer>
       ) : null}
-      {selectedRoute && !twoColumnTable ? (
+      {selectedRoute && !twoToutesTable ? (
         <TableContainer
           component={Paper}
           sx={{ ...commonTableContainerStyles }}

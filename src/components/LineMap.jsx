@@ -1,7 +1,7 @@
 import { CircleMarker, Polyline, Popup } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 import { findRouteById } from "../utils/utils";
-import { blueLineColor, redLineColor } from "../constants";
+import { DEFAULT_ID, BLUE_LINE_COLOR, RED_LINE_COLOR } from "../constants";
 
 const LineMap = ({ lineInfo, routeId }) => {
   const navigate = useNavigate();
@@ -43,14 +43,14 @@ const LineMap = ({ lineInfo, routeId }) => {
     navigate(`/details/${line}`);
   };
 
-  if (routeId && routeId !== "defaultId") {
+  if (routeId && routeId !== DEFAULT_ID) {
     const route = findRouteById(lineInfo, routeId);
     return (
       <>
         {lineInfo && (
           <div>
-            {renderRouteStops(route.stops, blueLineColor)}
-            {renderRoutePolyline(route.segments, blueLineColor, line)}
+            {renderRouteStops(route.stops, BLUE_LINE_COLOR)}
+            {renderRoutePolyline(route.segments, BLUE_LINE_COLOR, line)}
           </div>
         )}
       </>
@@ -61,10 +61,10 @@ const LineMap = ({ lineInfo, routeId }) => {
     <>
       {lineInfo && (
         <div>
-          {renderRouteStops(firstRouteStops, blueLineColor)}
-          {renderRoutePolyline(firstRouteSegments, blueLineColor, line)}
-          {renderRouteStops(secondRouteStops, redLineColor)}
-          {renderRoutePolyline(secondRouteSegments, redLineColor, line)}
+          {renderRouteStops(firstRouteStops, BLUE_LINE_COLOR)}
+          {renderRoutePolyline(firstRouteSegments, BLUE_LINE_COLOR, line)}
+          {renderRouteStops(secondRouteStops, RED_LINE_COLOR)}
+          {renderRoutePolyline(secondRouteSegments, RED_LINE_COLOR, line)}
         </div>
       )}
     </>

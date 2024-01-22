@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { blueTextColor } from "../constants";
+import { BLUE_TEXT_COLOR } from "../constants";
 
 const LineList = ({ lines }) => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const LineList = ({ lines }) => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Typography variant="h6" align="center" color={blueTextColor} fontWeight="bold">
+      <Typography variant="h6" align="center" color={BLUE_TEXT_COLOR} fontWeight="bold">
         Lines
       </Typography>
       {lines && (
@@ -29,7 +29,7 @@ const LineList = ({ lines }) => {
             >
               <ListItemButton>
                 <ListItemText>
-                  <Typography variant="body1" color={blueTextColor} fontWeight="bold">
+                  <Typography variant="body1" color={BLUE_TEXT_COLOR} fontWeight="bold">
                     {lineInfo.line}
                   </Typography>
                 </ListItemText>
