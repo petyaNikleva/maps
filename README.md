@@ -1,8 +1,8 @@
-# Public Transport App
+# Public Transport Visualization Map 
 
-Public Transport Routes Map Visualization Application.
+Public Transport Visualization Map App
 
-This application visualizes the routes of several lines of public transport. The app consists of a small server created with Express.js and Front-end part is created with React.
+This application visualizes the routes of several lines of public transport. It consists of a small server created with Express.js and Front-end part is created with React.
 
 ## Key Features:
 
