@@ -38,7 +38,7 @@ function Home() {
           <MenuItem value={"TB"}>Trolleybus</MenuItem>
         </Select>
       </FormControl>
-      <Box className="wrapper" style={{ display: "flex" }}>
+      <Box display="flex" alignItems="center">
         {lines && <LineList lines={lines} />}
         {lines && <Map lines={lines} />}
       </Box>

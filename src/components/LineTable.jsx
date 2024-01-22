@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -7,29 +8,91 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
-import { findRouteById } from "../utils/utils";
+import { combineRoutes, findRouteById } from "../utils/utils";
 
-const LineTable = ({ slectedLine, routeId }) => {
-  const [selectedRoute, setSelectedRoute] = useState('');
-  const { line } = slectedLine;
+const LineTable = ({ sеlectedLine, routeId }) => {
+  const [selectedRoute, setSelectedRoute] = useState("");
+  const [twoColumnTable, setTwoColumnTable] = useState(false);
 
   useEffect(() => {
-    const route = findRouteById(slectedLine, routeId || slectedLine.routes[0].id);
-    setSelectedRoute(route);
-  }, [slectedLine, routeId]);
+    if (routeId !== "defaultId") {
+      const route = findRouteById(sеlectedLine, routeId);
+      setSelectedRoute(route);
+      setTwoColumnTable(false);
+    } else {
+      setTwoColumnTable(true);
+    }
+  }, [sеlectedLine, routeId]);
+
+  const { line, routes } = sеlectedLine;
+  const [firstRoute, secondRoute] = routes;
+  const { name: firstRouteName, stops: firstRouteStops } = firstRoute;
+  const { name: secondRouteName, stops: secondRouteStops } = secondRoute;
+  const combinedStops = combineRoutes(firstRouteStops, secondRouteStops);
+
+  const commonTableContainerStyles = {
+    width: "320px",
+    height: "70vh",
+    maxHeight: "800px",
+    overflowY: "auto",
+  };
 
   return (
-    <>
-      {selectedRoute ? (
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      marginTop="5rem"
+    >
+      {twoColumnTable ? (
         <TableContainer
           component={Paper}
-          style={{ maxWidth: 400, height: 300, overflowY: "auto" }}
+          sx={{ ...commonTableContainerStyles }}
         >
-          <Table stickyHeader aria-label="sticky table">
+          <Typography fontWeight="bold" align="center">
+            ЛИНИЯ {line}
+          </Typography>
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>ЛИНИЯ {line}</TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>
+                  {firstRouteName}
+                </TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>
+                  {secondRouteName}
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {combinedStops.map(({ firstRouteStop, secondRouteStop }) => (
+                <TableRow key={firstRouteStop.id}>
+                  <TableCell>
+                    {firstRouteStop ? firstRouteStop.name : ""}
+                  </TableCell>
+                  <TableCell>
+                    {secondRouteStop ? secondRouteStop.name : ""}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : null}
+      {selectedRoute && !twoColumnTable ? (
+        <TableContainer
+          component={Paper}
+          sx={{ ...commonTableContainerStyles }}
+        >
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography fontWeight="bold" align="center">
+                    ЛИНИЯ {line}
+                  </Typography>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -42,7 +105,7 @@ const LineTable = ({ slectedLine, routeId }) => {
           </Table>
         </TableContainer>
       ) : null}
-    </>
+    </Box>
   );
 };
 

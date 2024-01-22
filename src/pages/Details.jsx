@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 import { useGetLineDataQuery } from "../store";
 import Map from "../components/Map";
 import LineTable from "../components/LineTable";
 
-
 const Details = () => {
-  const [slectedLine, setSlectedLine] = useState(null);
-  const [routeId, setRouteId] = useState("");
+  const [sеlectedLine, setSеlectedLine] = useState(null);
+  const [routeId, setRouteId] = useState("defaultId");
   const { line } = useParams();
   const {
     data: lineData,
@@ -19,10 +18,9 @@ const Details = () => {
 
   useEffect(() => {
     if (lineData) {
-      setSlectedLine(lineData);
+      setSеlectedLine(lineData);
     }
   }, [lineData]);
-
 
   const handleChange = (e) => {
     const selectedRouteId = e.target.value;
@@ -31,22 +29,28 @@ const Details = () => {
 
   return (
     <div>
-      {slectedLine && (
-        <FormControl fullWidth>
+      {sеlectedLine && (
+        <FormControl fullWidth sx={{marginBottom: 2}}>
           <InputLabel>Change</InputLabel>
           <Select value={routeId} label="route" onChange={handleChange}>
-            <MenuItem value={slectedLine.routes[0].id}>
-              {slectedLine.routes[0].name}
+          <MenuItem value={"defaultId"}>
+              ВСИЧКИ СПИРКИ
             </MenuItem>
-            <MenuItem value={slectedLine.routes[1].id}>
-              {slectedLine.routes[1].name}
+            <MenuItem value={sеlectedLine.routes[0].id}>
+              {sеlectedLine.routes[0].name}
+            </MenuItem>
+            <MenuItem value={sеlectedLine.routes[1].id}>
+              {sеlectedLine.routes[1].name}
             </MenuItem>
           </Select>
         </FormControl>
       )}
-      {slectedLine && <LineTable slectedLine={slectedLine} routeId={routeId} />}
-      {slectedLine && <Map lines={[slectedLine]} routeId={routeId} />}
-
+      <Box display="flex" alignItems="flex-end">
+        {sеlectedLine && (
+          <LineTable sеlectedLine={sеlectedLine} routeId={routeId} />
+        )}
+        {sеlectedLine && <Map lines={[sеlectedLine]} routeId={routeId} />}
+      </Box>
       {lineDataLoading && <p>Loading...</p>}
       {lineDataError && <p>Error fetching data</p>}
     </div>

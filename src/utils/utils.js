@@ -7,3 +7,17 @@ export function findRouteById(currentLine, routeId) {
       return null;
   }
 }
+
+export const combineRoutes = (firstRouteStops, secondRouteStops) => {
+  const combinedStops = [];
+  const minLength = Math.min(firstRouteStops.length, secondRouteStops.length);
+  
+  for (let i = 0; i < minLength; i++) {
+    combinedStops.push({
+      firstRouteStop: firstRouteStops[i],
+      secondRouteStop: secondRouteStops[i],
+    });
+  }
+
+  return combinedStops;
+};

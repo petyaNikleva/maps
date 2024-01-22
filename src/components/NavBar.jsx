@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { Link } from 'react-router-dom';
 
-import "./NavBar.css";
-
 const NavBar = () => {
 
   return (

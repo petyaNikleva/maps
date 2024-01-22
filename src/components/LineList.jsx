@@ -1,4 +1,5 @@
 import {
+  Box,
   List,
   ListItem,
   ListItemButton,
@@ -6,30 +7,29 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { blueTextColor } from "../constants";
 
 const LineList = ({ lines }) => {
   const navigate = useNavigate();
   const onClickHandler = (line) => {
     navigate(`/details/${line}`);
   };
+
   return (
-    <div>
-      <Typography variant="h6" align="center" color="#1976d2" fontWeight="bold">
-        All Lines
+    <Box display="flex" flexDirection="column" alignItems="center">
+      <Typography variant="h6" align="center" color={blueTextColor} fontWeight="bold">
+        Lines
       </Typography>
       {lines && (
         <List>
-          {lines.map((lineInfo, index) => (
+          {lines.map((lineInfo) => (
             <ListItem
               key={lineInfo.line}
               onClick={() => onClickHandler(lineInfo.line)}
             >
               <ListItemButton>
                 <ListItemText>
-                  <Typography
-                    variant="body1"
-                    style={{ color: "#1976d2", fontWeight: "bold" }}
-                  >
+                  <Typography variant="body1" color={blueTextColor} fontWeight="bold">
                     {lineInfo.line}
                   </Typography>
                 </ListItemText>
@@ -38,7 +38,7 @@ const LineList = ({ lines }) => {
           ))}
         </List>
       )}
-    </div>
+    </Box>
   );
 };
 
